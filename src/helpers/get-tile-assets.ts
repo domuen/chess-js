@@ -1,19 +1,21 @@
-import { PieceID } from "../types";
+import { Tile } from "../types";
 
-const King = "K";
-const Pawn = "P";
-const Knight = "N";
-const Bishop = "B";
-const Rook = "R";
-const Queen = "Q";
+type Color = "black" | "white";
 
-const getTileAsset = (piece?: PieceID) => {
-  if (piece === 0) return King;
-  if (piece === 1) return Pawn;
-  if (piece === 2) return Knight;
-  if (piece === 3) return Bishop;
-  if (piece === 4) return Rook;
-  if (piece === 5) return Queen;
+const King = (color: Color) => require(`../assets/king-${color}.png`);
+const Pawn = (color: Color) => require(`../assets/pawn-${color}.png`);
+const Knight = (color: Color) => require(`../assets/knight-${color}.png`);
+const Bishop = (color: Color) => require(`../assets/bishop-${color}.png`);
+const Rook = (color: Color) => require(`../assets/rook-${color}.png`);
+const Queen = (color: Color) => require(`../assets/queen-${color}.png`);
+
+const getTileAsset = (tile: Tile) => {
+  if (tile.piece === 0) return King(tile.white ? "white" : "black");
+  if (tile.piece === 1) return Pawn(tile.white ? "white" : "black");
+  if (tile.piece === 2) return Knight(tile.white ? "white" : "black");
+  if (tile.piece === 3) return Bishop(tile.white ? "white" : "black");
+  if (tile.piece === 4) return Rook(tile.white ? "white" : "black");
+  if (tile.piece === 5) return Queen(tile.white ? "white" : "black");
 };
 
 export default getTileAsset;

@@ -20,7 +20,7 @@ export default React.memo<Props>((props) => {
 
   const tile = props.tile;
 
-  const tileAsset = getTileAsset(tile.piece);
+  const tileAsset = getTileAsset(tile);
 
   const moveable = props.isMoveable;
   const selectable = !isNaN(tile.piece!);
@@ -50,7 +50,7 @@ export default React.memo<Props>((props) => {
 
   return <React.Fragment>
     <div className={cn("tile", { dark }, { selected }, { selectable }, { moveable })} onClick={handleClick}>
-      <p>{tileAsset}</p>
+      {selectable && <img src={tileAsset} alt="" />}
     </div>
   </React.Fragment>;
 });

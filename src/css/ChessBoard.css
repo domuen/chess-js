@@ -11,7 +11,7 @@
 }
 
 .tile {
-  background-color: white;
+  background-color: wheat;
   width: 100px;
   height: 100px;
   padding: 0;
@@ -23,7 +23,7 @@
 }
 
 .tile.dark {
-  background-color: black;
+  background-color: burlywood;
   color: white;
 }
 
@@ -37,4 +37,9 @@
 
 .tile.moveable {
   background-color: red;
+}
+
+.tile img {
+  width: 90px;
+  height: 90px;
 }
