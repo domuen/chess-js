@@ -1,4 +1,5 @@
-import { ChessBoard, Tile, TileCoords } from "../types";
+import { ChessBoard, Tile, TileCoords, Extra } from "../types";
+import cC from "./compare-coords";
 import findTileIndex from "./find-tile-index";
 
 // currently hard coding move checks
@@ -34,10 +35,16 @@ const getKingMoves = (board: ChessBoard, tile: Tile) => {
   return moveArray;
 };
 
-const getPawnMoves = (board: ChessBoard, tile: Tile) => {
+const getPawnMoves = (board: ChessBoard, tile: Tile, extra: Extra) => {
   const moveArray: TileCoords[] = [];
 
   const [boardIndex, rowIndex] = findTileIndex(board, tile);
+
+  // not sure how to fix this
+  // @ts-ignore
+  const hasLeftPassant = extra.passants.some(c => !!c.l && cC(c.coords, tile.tile));
+  // @ts-ignore
+  const hasRightPassant = extra.passants.some(c => !!c.r && cC(c.coords, tile.tile));
 
   if (!tile.white) {
     const tileT1 = board[boardIndex! + 1]?.[rowIndex!];
@@ -47,12 +54,12 @@ const getPawnMoves = (board: ChessBoard, tile: Tile) => {
     const tileBR = board[boardIndex! + 1]?.[rowIndex! + 1];
 
     // prevent forward takes
-    if (!tileT1.piece) moveArray.push(tileT1.tile);
-    if (!tileT2.piece && !tile.moved) moveArray.push(tileT2.tile);
+    if (!!tileT2 && !tileT1.piece) moveArray.push(tileT1.tile);
+    if (!!tileT2 && !tileT2.piece && !tile.moved) moveArray.push(tileT2.tile);
 
     // diagonal takes
-    if (!!tileBL?.piece && tileBL?.white !== tile.white) moveArray.push(tileBL.tile);
-    if (!!tileBR?.piece && tileBR?.white !== tile.white) moveArray.push(tileBR.tile);
+    if (hasLeftPassant || !!tileBL?.piece && tileBL?.white !== tile.white) moveArray.push(tileBL.tile);
+    if (hasRightPassant || !!tileBR?.piece && tileBR?.white !== tile.white) moveArray.push(tileBR.tile);
   } else {
     const tileT1 = board[boardIndex! - 1]?.[rowIndex!];
     const tileT2 = board[boardIndex! - 2]?.[rowIndex!];
@@ -60,11 +67,12 @@ const getPawnMoves = (board: ChessBoard, tile: Tile) => {
     const tileTL = board[boardIndex! - 1]?.[rowIndex! - 1];
     const tileTR = board[boardIndex! - 1]?.[rowIndex! + 1];
 
-    if (!tileT1.piece) moveArray.push(tileT1.tile);
-    if (!tileT2.piece && !tile.moved) moveArray.push(tileT2.tile);
+    if (!!tileT1 && !tileT1.piece) moveArray.push(tileT1.tile);
+    if (!!tileT2 && !tileT2.piece && !tile.moved) moveArray.push(tileT2.tile);
 
-    if (!!tileTL?.piece && tileTL?.white !== tile.white) moveArray.push(tileTL.tile);
-    if (!!tileTR?.piece && tileTR?.white !== tile.white) moveArray.push(tileTR.tile);
+    if (hasLeftPassant || !!tileTL?.piece && tileTL?.white !== tile.white) moveArray.push(tileTL.tile);
+    if (hasRightPassant || !!tileTR?.piece && tileTR?.white !== tile.white) moveArray.push(tileTR.tile);
+
   }
 
   return moveArray;
@@ -392,9 +400,9 @@ const getQueenMoves = (board: ChessBoard, tile: Tile) => {
   return moveArray;
 };
 
-const findMoveTiles = (board: ChessBoard, tile: Tile) => {
+const findMoveTiles = (board: ChessBoard, tile: Tile, extra: Extra) => {
   if (tile.piece === 0) return getKingMoves(board, tile);
-  if (tile.piece === 1) return getPawnMoves(board, tile);
+  if (tile.piece === 1) return getPawnMoves(board, tile, extra);
   if (tile.piece === 2) return getKnightMoves(board, tile);
   if (tile.piece === 3) return getBishopMoves(board, tile);
   if (tile.piece === 4) return getRookMoves(board, tile);
