@@ -1,4 +1,4 @@
-import { PieceID, ColumnString, RowNumber, ChessBoard, Tile } from "../types";
+import { ChessBoard, Tile } from "../types";
 import findTileIndex from "./find-tile-index";
 import mL from "./math-letter";
 
@@ -7,24 +7,30 @@ import mL from "./math-letter";
 // also need conditional moves such as 
 // pawn takes and preventing king check moves
 
-const numArrIndex = ["a", "b", "c", "d", "e", "f", "g", "h"];
-
-const checkAndPush = () => { };
-
 const getKingMoves = (board: ChessBoard, tile: Tile) => {
   const moveArray = [];
 
-  const l = tile.tile[0];
-  const n = tile.tile[1];
+  const [boardIndex, rowIndex] = findTileIndex(board, tile);
 
-  moveArray.push([mL(l, "-"), n + 1]);
-  moveArray.push([l, n + 1]);
-  moveArray.push([mL(l, "+"), n + 1]);
-  moveArray.push([mL(l, "-"), n]);
-  moveArray.push([mL(l, "+"), n]);
-  moveArray.push([mL(l, "-"), n - 1]);
-  moveArray.push([l, n - 1]);
-  moveArray.push([mL(l, "+"), n - 1]);
+  // remove 1 from `boardIndex` to move one row up
+  // remove 1 from `rowIndex` to go one column back
+  const tileTL = board?.[boardIndex! - 1]?.[rowIndex! - 1];
+  const tileT = board?.[boardIndex! - 1]?.[rowIndex!];
+  const tileTR = board?.[boardIndex! - 1]?.[rowIndex! + 1];
+  const tileR = board?.[boardIndex!]?.[rowIndex! + 1];
+  const tileBR = board?.[boardIndex! + 1]?.[rowIndex! + 1];
+  const tileB = board?.[boardIndex! + 1]?.[rowIndex!];
+  const tileBL = board?.[boardIndex! + 1]?.[rowIndex! - 1];
+  const tileL = board?.[boardIndex!]?.[rowIndex! - 1];
+
+  if (!!tileTL && tileTL.white !== tile.white) moveArray.push(tileTL.tile);
+  if (!!tileT && tileT.white !== tile.white) moveArray.push(tileT.tile);
+  if (!!tileTR && tileTR.white !== tile.white) moveArray.push(tileTR.tile);
+  if (!!tileR && tileR.white !== tile.white) moveArray.push(tileR.tile);
+  if (!!tileBR && tileBR.white !== tile.white) moveArray.push(tileBR.tile);
+  if (!!tileB && tileB.white !== tile.white) moveArray.push(tileB.tile);
+  if (!!tileBL && tileBL.white !== tile.white) moveArray.push(tileBL.tile);
+  if (!!tileL && tileL.white !== tile.white) moveArray.push(tileL.tile);
 
   return moveArray.filter(t => (!!t[0] && !!t[1]));
 };
@@ -40,8 +46,6 @@ const getPawnMoves = (board: ChessBoard, tile: Tile) => {
 
     const leftDiagonal = board[boardIndex! + 1]?.[rowIndex! - 1];
     const rightDiagonal = board[boardIndex! + 1]?.[rowIndex! + 1];
-
-    console.log(leftDiagonal, rightDiagonal);
 
     if (!!leftDiagonal?.piece && leftDiagonal?.white !== tile.white) moveArray.push([mL(l, "-"), n - 1]);
     if (!!rightDiagonal?.piece && rightDiagonal?.white !== tile.white) moveArray.push([mL(l, "+"), n - 1]);
