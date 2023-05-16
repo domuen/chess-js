@@ -3,6 +3,7 @@ export interface Tile {
   white: boolean | undefined;
   tile: TileCoords;
   piece?: PieceID | undefined;
+  moved?: boolean;
 }
 
 export type TileCoords = [ColumnString, RowNumber];

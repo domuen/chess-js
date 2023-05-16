@@ -18,7 +18,7 @@ const movePiece = (board: ChessBoard, tile: Tile, newTile: Tile): ChessBoard => 
   const [boardIndex2, tileIndex2] = findTileIndex(board, newTile);
 
   const capturedRow2 = [...spreadBoard[boardIndex2!]];
-  capturedRow2.splice(tileIndex2!, 1, createTile(newTile.dark, tile.white, newTile.tile, tile.piece!));
+  capturedRow2.splice(tileIndex2!, 1, createTile(newTile.dark, tile.white, newTile.tile, tile.piece!, true));
 
   // @ts-ignore
   spreadBoard.splice(boardIndex2!, 1, capturedRow2);

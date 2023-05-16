@@ -4,7 +4,8 @@ const createTile = (
   dark: boolean,
   white: boolean | undefined,
   tile: TileCoords,
-  piece?: PieceID
-): Tile => ({ dark, white, tile, piece });
+  piece?: PieceID,
+  moved?: boolean
+): Tile => ({ dark, white, tile, piece, moved });
 
 export default createTile;
