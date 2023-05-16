@@ -1,6 +1,6 @@
 export interface Tile {
   dark: boolean;
-  white: boolean;
+  white: boolean | undefined;
   tile: TileCoords;
   piece?: PieceID | undefined;
 }

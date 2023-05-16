@@ -33,44 +33,44 @@ const initializeBoard = (): ChessBoard => {
       createTile(false, false, ["h", 7], 1)
     ],
     [
-      createTile(false, false, ["a", 6]),
-      createTile(true,  false, ["b", 6]),
-      createTile(false, false, ["c", 6]),
-      createTile(true,  false, ["d", 6]),
-      createTile(false, false, ["e", 6]),
-      createTile(true,  false, ["f", 6]),
-      createTile(false, false, ["g", 6]),
-      createTile(true,  false, ["h", 6])
+      createTile(false, undefined, ["a", 6]),
+      createTile(true,  undefined, ["b", 6]),
+      createTile(false, undefined, ["c", 6]),
+      createTile(true,  undefined, ["d", 6]),
+      createTile(false, undefined, ["e", 6]),
+      createTile(true,  undefined, ["f", 6]),
+      createTile(false, undefined, ["g", 6]),
+      createTile(true,  undefined, ["h", 6])
     ],
     [
-      createTile(true,  false, ["a", 5]),
-      createTile(false, false, ["b", 5]),
-      createTile(true,  false, ["c", 5]),
-      createTile(false, false, ["d", 5]),
-      createTile(true,  false, ["e", 5]),
-      createTile(false, false, ["f", 5]),
-      createTile(true,  false, ["g", 5]),
-      createTile(false, false, ["h", 5])
+      createTile(true,  undefined, ["a", 5]),
+      createTile(false, undefined, ["b", 5]),
+      createTile(true,  undefined, ["c", 5]),
+      createTile(false, undefined, ["d", 5]),
+      createTile(true,  undefined, ["e", 5]),
+      createTile(false, undefined, ["f", 5]),
+      createTile(true,  undefined, ["g", 5]),
+      createTile(false, undefined, ["h", 5])
     ],
     [
-      createTile(false, false, ["a", 4]),
-      createTile(true,  false, ["b", 4]),
-      createTile(false, false, ["c", 4]),
-      createTile(true,  false, ["d", 4]),
-      createTile(false, false, ["e", 4]),
-      createTile(true,  false, ["f", 4]),
-      createTile(false, false, ["g", 4]),
-      createTile(true,  false, ["h", 4])
+      createTile(false, undefined, ["a", 4]),
+      createTile(true,  undefined, ["b", 4]),
+      createTile(false, undefined, ["c", 4]),
+      createTile(true,  undefined, ["d", 4]),
+      createTile(false, undefined, ["e", 4]),
+      createTile(true,  undefined, ["f", 4]),
+      createTile(false, undefined, ["g", 4]),
+      createTile(true,  undefined, ["h", 4])
     ],
     [
-      createTile(true,  false, ["a", 3]),
-      createTile(false, false, ["b", 3]),
-      createTile(true,  false, ["c", 3]),
-      createTile(false, false, ["d", 3]),
-      createTile(true,  false, ["e", 3]),
-      createTile(false, false, ["f", 3]),
-      createTile(true,  false, ["g", 3]),
-      createTile(false, false, ["h", 3])
+      createTile(true,  undefined, ["a", 3]),
+      createTile(false, undefined, ["b", 3]),
+      createTile(true,  undefined, ["c", 3]),
+      createTile(false, undefined, ["d", 3]),
+      createTile(true,  undefined, ["e", 3]),
+      createTile(false, undefined, ["f", 3]),
+      createTile(true,  undefined, ["g", 3]),
+      createTile(false, undefined, ["h", 3])
     ],
     [
       createTile(false, true, ["a", 2], 1),

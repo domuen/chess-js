@@ -9,7 +9,7 @@ const movePiece = (board: ChessBoard, tile: Tile, newTile: Tile): ChessBoard => 
 
   // remove piece from old location
   const capturedRow = [...spreadBoard[boardIndex!]];
-  capturedRow.splice(tileIndex!, 1, createTile(tile.dark, false, tile.tile));
+  capturedRow.splice(tileIndex!, 1, createTile(tile.dark, undefined, tile.tile));
 
   // @ts-ignore
   spreadBoard.splice(boardIndex!, 1, capturedRow);
