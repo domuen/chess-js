@@ -100,7 +100,6 @@ const getKnightMoves = (board: ChessBoard, tile: Tile) => {
   if (!!tileBL2 && tileBL2.white !== tile.white) moveArray.push(tileBL2.tile);
 
   return moveArray.filter(t => (!!t[0] && !!t[1]));
-
 };
 
 const getBishopMoves = (board: ChessBoard, tile: Tile) => {
@@ -177,49 +176,82 @@ const getBishopMoves = (board: ChessBoard, tile: Tile) => {
   if (!!tileBL7 && tileBL7.white !== tile.white) moveArray.push(tileBL7.tile);
 
   return moveArray.filter(t => (!!t[0] && !!t[1]));
-
 };
 
 const getRookMoves = (board: ChessBoard, tile: Tile) => {
-  const moveArray: any[] = [];
+  const moveArray: TileCoords[] = [];
 
-  const l = tile.tile[0];
-  const n = tile.tile[1];
+  const [boardIndex, rowIndex] = findTileIndex(board, tile);
 
-  moveArray.push([l, n + 1]);
-  moveArray.push([l, n + 2]);
-  moveArray.push([l, n + 3]);
-  moveArray.push([l, n + 4]);
-  moveArray.push([l, n + 5]);
-  moveArray.push([l, n + 6]);
-  moveArray.push([l, n + 7]);
+  // top moves
+  const tileT1 = board?.[boardIndex! + 1]?.[rowIndex!];
+  const tileT2 = board?.[boardIndex! + 2]?.[rowIndex!];
+  const tileT3 = board?.[boardIndex! + 3]?.[rowIndex!];
+  const tileT4 = board?.[boardIndex! + 4]?.[rowIndex!];
+  const tileT5 = board?.[boardIndex! + 5]?.[rowIndex!];
+  const tileT6 = board?.[boardIndex! + 6]?.[rowIndex!];
+  const tileT7 = board?.[boardIndex! + 7]?.[rowIndex!];
 
-  moveArray.push([mL(l, "+"), n]);
-  moveArray.push([mL(l, "+", 2), n]);
-  moveArray.push([mL(l, "+", 3), n]);
-  moveArray.push([mL(l, "+", 4), n]);
-  moveArray.push([mL(l, "+", 5), n]);
-  moveArray.push([mL(l, "+", 6), n]);
-  moveArray.push([mL(l, "+", 7), n]);
+  // right moves
+  const tileR1 = board?.[boardIndex!]?.[rowIndex! + 1];
+  const tileR2 = board?.[boardIndex!]?.[rowIndex! + 2];
+  const tileR3 = board?.[boardIndex!]?.[rowIndex! + 3];
+  const tileR4 = board?.[boardIndex!]?.[rowIndex! + 4];
+  const tileR5 = board?.[boardIndex!]?.[rowIndex! + 5];
+  const tileR6 = board?.[boardIndex!]?.[rowIndex! + 6];
+  const tileR7 = board?.[boardIndex!]?.[rowIndex! + 7];
 
-  moveArray.push([l, n - 1]);
-  moveArray.push([l, n - 2]);
-  moveArray.push([l, n - 3]);
-  moveArray.push([l, n - 4]);
-  moveArray.push([l, n - 5]);
-  moveArray.push([l, n - 6]);
-  moveArray.push([l, n - 7]);
+  // bottom moves
+  const tileB1 = board?.[boardIndex! - 1]?.[rowIndex!];
+  const tileB2 = board?.[boardIndex! - 2]?.[rowIndex!];
+  const tileB3 = board?.[boardIndex! - 3]?.[rowIndex!];
+  const tileB4 = board?.[boardIndex! - 4]?.[rowIndex!];
+  const tileB5 = board?.[boardIndex! - 5]?.[rowIndex!];
+  const tileB6 = board?.[boardIndex! - 6]?.[rowIndex!];
+  const tileB7 = board?.[boardIndex! - 7]?.[rowIndex!];
 
-  moveArray.push([mL(l, "-"), n]);
-  moveArray.push([mL(l, "-", 2), n]);
-  moveArray.push([mL(l, "-", 3), n]);
-  moveArray.push([mL(l, "-", 4), n]);
-  moveArray.push([mL(l, "-", 5), n]);
-  moveArray.push([mL(l, "-", 6), n]);
-  moveArray.push([mL(l, "-", 7), n]);
+  // left moves
+  const tileL1 = board?.[boardIndex!]?.[rowIndex! - 1];
+  const tileL2 = board?.[boardIndex!]?.[rowIndex! - 2];
+  const tileL3 = board?.[boardIndex!]?.[rowIndex! - 3];
+  const tileL4 = board?.[boardIndex!]?.[rowIndex! - 4];
+  const tileL5 = board?.[boardIndex!]?.[rowIndex! - 5];
+  const tileL6 = board?.[boardIndex!]?.[rowIndex! - 6];
+  const tileL7 = board?.[boardIndex!]?.[rowIndex! - 7];
+
+  if (!!tileT1 && tileT1.white !== tile.white) moveArray.push(tileT1.tile);
+  if (!!tileT2 && tileT2.white !== tile.white) moveArray.push(tileT2.tile);
+  if (!!tileT3 && tileT3.white !== tile.white) moveArray.push(tileT3.tile);
+  if (!!tileT4 && tileT4.white !== tile.white) moveArray.push(tileT4.tile);
+  if (!!tileT5 && tileT5.white !== tile.white) moveArray.push(tileT5.tile);
+  if (!!tileT6 && tileT6.white !== tile.white) moveArray.push(tileT6.tile);
+  if (!!tileT7 && tileT7.white !== tile.white) moveArray.push(tileT7.tile);
+
+  if (!!tileR1 && tileR1.white !== tile.white) moveArray.push(tileR1.tile);
+  if (!!tileR2 && tileR2.white !== tile.white) moveArray.push(tileR2.tile);
+  if (!!tileR3 && tileR3.white !== tile.white) moveArray.push(tileR3.tile);
+  if (!!tileR4 && tileR4.white !== tile.white) moveArray.push(tileR4.tile);
+  if (!!tileR5 && tileR5.white !== tile.white) moveArray.push(tileR5.tile);
+  if (!!tileR6 && tileR6.white !== tile.white) moveArray.push(tileR6.tile);
+  if (!!tileR7 && tileR7.white !== tile.white) moveArray.push(tileR7.tile);
+
+  if (!!tileB1 && tileB1.white !== tile.white) moveArray.push(tileB1.tile);
+  if (!!tileB2 && tileB2.white !== tile.white) moveArray.push(tileB2.tile);
+  if (!!tileB3 && tileB3.white !== tile.white) moveArray.push(tileB3.tile);
+  if (!!tileB4 && tileB4.white !== tile.white) moveArray.push(tileB4.tile);
+  if (!!tileB5 && tileB5.white !== tile.white) moveArray.push(tileB5.tile);
+  if (!!tileB6 && tileB6.white !== tile.white) moveArray.push(tileB6.tile);
+  if (!!tileB7 && tileB7.white !== tile.white) moveArray.push(tileB7.tile);
+
+  if (!!tileL1 && tileL1.white !== tile.white) moveArray.push(tileL1.tile);
+  if (!!tileL2 && tileL2.white !== tile.white) moveArray.push(tileL2.tile);
+  if (!!tileL3 && tileL3.white !== tile.white) moveArray.push(tileL3.tile);
+  if (!!tileL4 && tileL4.white !== tile.white) moveArray.push(tileL4.tile);
+  if (!!tileL5 && tileL5.white !== tile.white) moveArray.push(tileL5.tile);
+  if (!!tileL6 && tileL6.white !== tile.white) moveArray.push(tileL6.tile);
+  if (!!tileL7 && tileL7.white !== tile.white) moveArray.push(tileL7.tile);
 
   return moveArray.filter(t => (!!t[0] && !!t[1]));
-
 };
 
 const getQueenMoves = (board: ChessBoard, tile: Tile) => {
