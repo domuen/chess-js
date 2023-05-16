@@ -1,12 +1,10 @@
-import { ColumnString, PieceID, RowNumber, Tile } from "../types";
+import { PieceID, Tile, TileCoords } from "../types";
 
 const createTile = (
   dark: boolean,
   white: boolean,
-  tile: [ColumnString, RowNumber],
+  tile: TileCoords,
   piece?: PieceID
-): Tile => ({
-  dark, white, tile, piece
-});
+): Tile => ({ dark, white, tile, piece });
 
 export default createTile;

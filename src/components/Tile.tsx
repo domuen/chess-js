@@ -1,5 +1,5 @@
 import React from "react";
-import { Tile, SelectedTile, ChessBoard } from "../types";
+import { Tile, ChessBoard, TileCoords } from "../types";
 import cn from "classnames";
 import getTileAsset from "../helpers/get-tile-assets";
 import findMoveTiles from "../helpers/find-move-tiles";
@@ -7,13 +7,12 @@ import movePiece from "../helpers/move-piece";
 
 interface Props {
   tile: Tile;
-  selectedTile: SelectedTile;
-  isMoveable: boolean;
   board: ChessBoard;
-  setBoard: any;
-
-  setSelectedTile: any;
-  setMoveTiles: any;
+  setBoard: React.Dispatch<React.SetStateAction<ChessBoard>>;
+  selectedTile: Tile | undefined;
+  setSelectedTile: React.Dispatch<React.SetStateAction<Tile | undefined>>;
+  setMoveTiles: React.Dispatch<React.SetStateAction<TileCoords[] | undefined>>;
+  isTarget: boolean | undefined;
 }
 
 export default React.memo<Props>((props) => {
@@ -22,24 +21,33 @@ export default React.memo<Props>((props) => {
 
   const tileAsset = getTileAsset(tile);
 
-  const moveable = props.isMoveable;
-  const selectable = !isNaN(tile.piece!);
-  const selected = props.selectedTile?.tile === tile.tile;
-  const dark = (!selected && !moveable && tile.dark);
+  // not better name, but this is whether or not
+  // a player can move a piece to this tile
+  const target = props.isTarget;
+  const hasPiece = !isNaN(tile.piece!);
+
+  const background = (() => {
+    if (props.selectedTile?.tile === tile.tile) return "selected";
+    if (!target && tile.dark) return "dark";
+  })();
+
+  const clearState = () => {
+    props.setSelectedTile(undefined);
+    props.setMoveTiles(undefined);
+  }
 
   const handleClick = () => {
-    console.log(tile);
-    if (!selectable && !props.selectedTile) return;
+    if (!!props.selectedTile && !target) return clearState();
+    if (!hasPiece && !target) return;
 
-    if (moveable && !!props.selectedTile) {
+    if (target) {
       const newBoard = movePiece(
-        props.board, props.selectedTile, tile
+        props.board, props.selectedTile!, tile
       );
 
       props.setBoard(newBoard);
 
-      props.setSelectedTile(undefined);
-      return props.setMoveTiles(undefined);
+      return clearState();
     }
 
     const moveTiles = findMoveTiles(props.board, tile);
@@ -49,8 +57,8 @@ export default React.memo<Props>((props) => {
   }
 
   return <React.Fragment>
-    <div className={cn("tile", { dark }, { selected }, { selectable }, { moveable })} onClick={handleClick}>
-      {selectable && <img src={tileAsset} alt="" />}
+    <div className={cn("tile", background, { selectable: hasPiece }, { moveable: target })} onClick={handleClick}>
+      {hasPiece && <img src={tileAsset} alt="" />}
     </div>
   </React.Fragment>;
 });
